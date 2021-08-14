@@ -1,0 +1,12 @@
+{
+  "name": "furpage-post-plugin",
+  "version": "0.0.1",
+  "description": "Furrypage post plugin",
+  "main": "index.js",
+  "repository": "git@github.com:tehzi/furpage-post-plugin.git",
+  "author": "Mikhail Zi <zi.white.drago@gmail.com>",
+  "license": "GPL",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
