@@ -5,8 +5,8 @@
     "version": "independent",
     "npmClient": "yarn",
     "command": {
-        "bootstrap": {
-            "hoist": true
+        "publish": {
+            "conventionalCommits": true
         }
     }
 }

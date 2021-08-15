@@ -1,0 +1,11 @@
+{
+  "name": "plugin-front",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Mikhail Zi <zi.white.drago@gmail.com>",
+  "private": true,
+  "license": "GNU GPLv3",
+  "dependencies": {
+    "typescript": "^4.3.5"
+  }
+}
