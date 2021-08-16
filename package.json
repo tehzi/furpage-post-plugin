@@ -1,0 +1,16 @@
+{
+  "name": "furpage-post-plugin",
+  "version": "0.0.1",
+  "description": "Furrypage post plugin",
+  "main": "index.js",
+  "repository": "git@github.com:tehzi/furpage-post-plugin.git",
+  "author": "Mikhail Zi <zi.white.drago@gmail.com>",
+  "license": "GNU GPLv3",
+  "scripts": {
+    "bootstrap": "lerna clean --yes && lerna bootstrap",
+    "setup": "yarn install --frozen-lockfile && yarn run bootstrap"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
