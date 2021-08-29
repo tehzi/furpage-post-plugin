@@ -1,12 +1,18 @@
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import HappyPack from "happypack";
-import { compact } from "lodash/array";
+import { compact } from "lodash-es";
 import FileManager from "filemanager-webpack-plugin";
 import HtmlPlugin from "html-webpack-plugin";
 import Dotenv from "dotenv-webpack";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
-import packageJson from "./package.json";
+import { readFile } from "fs/promises";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const packageJson = JSON.parse(await readFile("./package.json"));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const isDevelopment = mode => mode === "development";
