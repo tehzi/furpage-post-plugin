@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "https://github.com/tehzi/furpage-post-plugin",
   "author": "Mikhail Zi",
-  "license": "GPLv3",
+  "license": "LGPL-3.0+",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
