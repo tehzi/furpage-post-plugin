@@ -1,0 +1,43 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "outDir": "./dist",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es6",
+        "jsx": "react",
+        "moduleResolution": "node",
+        "noEmitOnError": false,
+        "downlevelIteration": true,
+        "noEmit": true,
+        "pretty": true,
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "typeRoots": ["src/js/types", "node_modules/@types"],
+        "lib": [
+            "esnext",
+            "dom"
+        ],
+        "paths": {
+            "~api/*": ["src/js/api/*"],
+            "~components/*": ["src/js/components/*"],
+            "~helpers/*": ["src/js/helpers/*"],
+            "~hoc/*": ["src/js/hoc/*"],
+            "~store/*": ["src/js/store/*"],
+            "~sagas/*": ["src/js/store/sagas/*"],
+            "~actions/*": ["src/js/store/actions/*"],
+            "~types/*": ["src/js/types/*"],
+            "~images/*": ["src/images/*"]
+        }
+    },
+    "include": [
+        "**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
