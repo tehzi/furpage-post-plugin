@@ -1,38 +1,35 @@
-import CopyWebpackPlugin from "copy-webpack-plugin";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import { compact } from "lodash-es";
-import FileManager from "filemanager-webpack-plugin";
-import HtmlPlugin from "html-webpack-plugin";
-import Dotenv from "dotenv-webpack";
+// import CopyWebpackPlugin from "copy-webpack-plugin";
+// import { CleanWebpackPlugin } from "clean-webpack-plugin";
+// import FileManager from "filemanager-webpack-plugin";
+// import HtmlPlugin from "html-webpack-plugin";
+// import Dotenv from "dotenv-webpack";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
-import { readFile } from "fs/promises";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-const packageJson = JSON.parse(await readFile("./package.json"));
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// import { fileURLToPath } from "url";
+// import { dirname } from "path";
 
 const isDevelopment = mode => mode === "development";
 
-const config = {
-    path: `${__dirname}/dist`,
-    clean: {
-        root: __dirname,
-        verbose: true,
-        dry: false,
-    },
-    html: {
-        filename: "background.html",
-        inject: false,
-        template: `${__dirname}/src/html/background.html`,
-    },
-    popup: {
-        filename: "popup.html",
-        inject: false,
-        template: `${__dirname}/src/html/popup.html`,
-    },
-};
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+
+// const config = {
+//     path: `${__dirname}/dist`,
+//     clean: {
+//         root: __dirname,
+//         verbose: true,
+//         dry: false,
+//     },
+//     html: {
+//         filename: "background.html",
+//         inject: false,
+//         template: `${__dirname}/src/html/background.html`,
+//     },
+//     popup: {
+//         filename: "popup.html",
+//         inject: false,
+//         template: `${__dirname}/src/html/popup.html`,
+//     },
+// };
 
 export default (_, { mode }) => ({
     devtool: isDevelopment(mode) && "inline-source-map",
@@ -52,22 +49,22 @@ export default (_, { mode }) => ({
                 exclude: /node_modules/,
                 loader: "babel-loader",
             },
-            {
-                test: /.*\.(ttf|eot|svg|css|woff|woff2|png|ico|jpg|jpeg|gif)$/i,
-                use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            name: "[name].[ext]",
-                            outputPath: "./",
-                            useRelativePath: false,
-                        },
-                    },
-                ],
-            },
+        //     {
+        //         test: /.*\.(ttf|eot|svg|css|woff|woff2|png|ico|jpg|jpeg|gif)$/i,
+        //         use: [
+        //             {
+        //                 loader: "file-loader",
+        //                 options: {
+        //                     name: "[name].[ext]",
+        //                     outputPath: "./",
+        //                     useRelativePath: false,
+        //                 },
+        //             },
+        //         ],
+        //     },
         ],
     },
-    plugins: compact([
+    plugins: [
         // new CleanWebpackPlugin(),
         // new Dotenv({
         //     path: `./.env.${isDevelopment ? "local" : "prod"}`,
@@ -107,5 +104,5 @@ export default (_, { mode }) => ({
         //             },
         //         ],
         //     }),
-    ]),
+    ].filter(Boolean),
 });
