@@ -6,7 +6,7 @@
         "outDir": "./dist",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "es6",
+        "module": "esnext",
         "target": "es6",
         "jsx": "react",
         "moduleResolution": "node",
@@ -19,8 +19,9 @@
         "baseUrl": ".",
         "typeRoots": ["src/js/types", "node_modules/@types"],
         "lib": [
+            "dom",
             "esnext",
-            "dom"
+            "dom.iterable"
         ],
         "paths": {
             "~api/*": ["src/js/api/*"],
@@ -36,7 +37,7 @@
     },
     "include": [
         "**/*"
-    ],
+, ".babelrc.js"    ],
     "exclude": [
         "node_modules"
     ]
