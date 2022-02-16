@@ -1,5 +1,3 @@
-import fetchJsonp from "fetch-jsonp";
-
 export interface GroupPermission {
     admin_level: 0 | 1 | 2 | 3;
 }
@@ -8,7 +6,7 @@ export default async function getGroupPermissionById(
     groupId: string,
     accessToken: string,
     fields = ["admin_level"],
-    v = "5.52",
+    v = "5.131",
 ): Promise<GroupPermission | string | never> {
     if (groupId) {
         const urlSearch = new URLSearchParams({
@@ -17,7 +15,7 @@ export default async function getGroupPermissionById(
             access_token: accessToken,
             v,
         }).toString();
-        const response = await fetchJsonp(
+        const response = await fetch(
             `https://api.vk.com/method/groups.getById?${urlSearch}`,
         );
         if (response.ok) {

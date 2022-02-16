@@ -3,10 +3,6 @@
     "name": "Furpage image poster",
     "version": "%%VERSION%%",
     "description": "Плагин для управлению очередью артов",
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'",
-        "sandbox": "sandbox allow-scripts; script-src 'self' unsafe-eval https://api.vk.com; object-src 'self'"
-    },
     "content_scripts": [
         {
             "matches": [
