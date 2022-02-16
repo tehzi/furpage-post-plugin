@@ -23,9 +23,6 @@ import { findBlank } from "~helpers/mode";
 import getGroupPermissionById from "~api/permission/getGroupPermissionById";
 import getApiPermission from "~api/permission/getApiPermission";
 
-const { CLIENT_ID } = process.env;
-const { GROUP } = process.env;
-
 export interface VKUrl {
     access_token: string;
     user_id: string;
@@ -34,7 +31,7 @@ export interface VKUrl {
 function* startAuth(): SagaIterator {
     const uri = new Uri("https://oauth.vk.com/authorize");
     uri.addQuery({
-        client_id: CLIENT_ID,
+        client_id: process.env.CLIENT_ID,
         scope: "pages,wall,groups,offline,notify,friends",
         redirect_uri: "https://oauth.vk.com/blank.html",
         response_type: "token",
@@ -61,22 +58,25 @@ function* startAuth(): SagaIterator {
         const {
             access_token: accessToken = false,
             user_id: userId = false,
-        } = Uri.parseQuery(blankUrl.fragment()) as VKUrl;
+        } = Uri.parseQuery(blankUrl.fragment()) as unknown as VKUrl;
         if (accessToken && userId) {
             try {
-                const {
-                    access_token: apiAccessToken,
-                    refresh_token: apiRefreshToken,
-                } = yield call(getApiPermission, accessToken);
+                // TODO remove auth for a future realization
+                // const {
+                //     access_token: apiAccessToken,
+                //     refresh_token: apiRefreshToken,
+                // } = yield call(getApiPermission, accessToken);
                 yield put(
                     auth({
                         accessToken,
                         userId,
-                        apiAccessToken,
-                        apiRefreshToken,
+                        // apiAccessToken,
+                        // apiRefreshToken,
                     }),
                 );
-            } catch {
+            } catch(err) {
+                console.log(err)
+                debugger
                 yield put(accessDeny());
                 yield put(deleteAuth());
             }
@@ -93,18 +93,20 @@ function* checkGroupPermission(): SagaIterator {
         const accessToken = yield select(
             ({ login: { auth: { accessToken: token = null } = {} } }) => token,
         );
+        
         const { admin_level: adminLevel = 0 } = yield call(
             getGroupPermissionById,
-            GROUP,
+            process.env.GROUP,
             accessToken,
         );
+        
         if (adminLevel > 1) {
             yield put(accessAllow());
         } else {
             yield put(accessDeny());
             yield put(deleteAuth());
         }
-    } catch (error) {
+    } catch {
         yield put(deleteAuth());
     }
 }

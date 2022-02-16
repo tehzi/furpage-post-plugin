@@ -1,9 +1,8 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Furpage image poster",
     "version": "%%VERSION%%",
     "description": "Плагин для управлению очередью артов",
-    "content_security_policy": "script-src 'self' unsafe-eval https://api.vk.com; object-src 'self'",
     "content_scripts": [
         {
             "matches": [
@@ -20,7 +19,9 @@
     "permissions": [
         "tabs",
         "activeTab",
-        "storage",
+        "storage"
+    ],
+    "host_permissions": [
         "http://www.deviantart.com/*",
         "http://*.deviantart.com/*",
         "https://*.deviantart.com/*",
@@ -32,15 +33,12 @@
         "https://api.vk.com/*"
     ],
     "background": {
-        "persistent": false,
-        "scripts": [
-            "background.js"
-        ]
+        "service_worker": "background.js"
     },
     "icons": {
         "128": "icon_128.png"
     },
-    "page_action": {
+    "action": {
         "default_title": "Furpage image poster",
         "default_icon": "icon_19.png",
         "default_popup": "popup.html"

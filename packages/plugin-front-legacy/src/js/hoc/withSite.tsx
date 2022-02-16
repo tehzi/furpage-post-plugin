@@ -37,15 +37,23 @@ const mapStateToProperties: MapStateToProps<
     SiteFromStoreProps,
     OwnSiteProps,
     AppStore
-> = ({
-    updateUrl: { url = null } = {},
-    login: { auth: { userId = null } = {} } = {},
-    images: { [window.location.href]: image = null } = {},
-}) => ({
-    url,
-    image,
-    loginIn: !!userId,
-});
+> = (store) => {
+    let userId = null;
+    const {
+        updateUrl: { url = null } = {},
+        images: { [window.location.href]: image = null } = {},
+    } = store;
+
+    if (store?.login?.auth) {
+        ({login: { auth: { userId = null } = {} }} = store)
+    }
+
+    return ({
+        url,
+        image,
+        loginIn: !!userId,
+    });
+};
 
 export interface DispatchSiteProps {
     onStartAuth: () => void;

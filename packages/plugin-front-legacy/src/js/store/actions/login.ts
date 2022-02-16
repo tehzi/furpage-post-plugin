@@ -3,8 +3,8 @@ import { CallableAction } from "~types/actions";
 export interface Auth {
     accessToken: string;
     userId: string;
-    apiAccessToken: string;
-    apiRefreshToken: string;
+    // apiAccessToken: string;
+    // apiRefreshToken: string;
 }
 
 export const AUTH = "AUTH";

@@ -1,23 +1,12 @@
-import React, { ComponentType } from "react";
-import { render } from "react-dom";
 import "~images/icon_19.png";
 import "~images/icon_128.png";
-import configureStore from "~store/configureStore";
+import configureStore, { sagaMiddleware } from "~store/configureStore";
 import createReducers from "~store/reducers/store";
-import App, { TAppProperties } from "../App";
+import { wrapStore } from "webext-redux";
+import rootSaga from "~store/sagas/rootSaga";
 
-const appContainer = document.createElement("div");
+const store = configureStore(createReducers());
 
-appContainer.id = "app";
-document.body.append(appContainer);
+wrapStore(store);
 
-const renderApp = (
-    Application: ComponentType<TAppProperties>,
-    mountNode: Element,
-): void => {
-    const store = configureStore(createReducers());
-
-    return render(<Application store={store} />, mountNode);
-};
-
-renderApp(App, document.querySelector("#app"));
+sagaMiddleware.run(rootSaga);
