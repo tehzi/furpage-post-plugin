@@ -16,24 +16,25 @@ import { ImageState } from "~store/reducers/images";
 
 type InnerSelectedProps = Pick<
     AppStore["login"],
-    "checkFailed" | "hasPermission" | "loading"
+    "checkFailed" | "hasPermission" | "loading" | "auth"
 > & {
-    loginIn: boolean;
+    loginIn?: boolean;
     image: ImageState;
 };
 
 const ButtonState: FC = () => {
+    let loginIn = false;
     const innerProperties = useSelector<AppStore, InnerSelectedProps>(
         ({
             login: {
-                auth: { userId = null } = {},
+                auth,
                 checkFailed = null,
                 hasPermission = null,
                 loading,
             } = {},
             images: { [window.location.href]: image = null } = {},
         }) => ({
-            loginIn: !!userId,
+            auth,
             checkFailed,
             hasPermission,
             image,
@@ -41,12 +42,14 @@ const ButtonState: FC = () => {
         }),
     );
     const {
-        loginIn = null,
+        auth = null,
         checkFailed = null,
         hasPermission = null,
         loading = false,
         image,
     } = innerProperties;
+
+    loginIn = !!auth?.userId;
 
     return (
         <>

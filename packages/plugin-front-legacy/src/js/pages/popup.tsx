@@ -1,10 +1,10 @@
 import React, { ComponentType } from "react";
 import { render } from "react-dom";
-import { applyMiddleware, Store } from "react-chrome-redux";
 import { Store as ReduxStore } from "redux";
 import { middleware } from "~store/configureStore";
 import App, { TAppProperties } from "../App";
 import AppStore from "~types/AppStore";
+import { applyMiddleware, Store } from "webext-redux";
 
 const renderApp = (
     Application: ComponentType<TAppProperties>,

@@ -12,8 +12,14 @@ import tabActivate from "./tabs/tabActivate";
 import sendImage from "./image/sendImage";
 
 export default function* rootSaga(): SagaIterator {
-    const mode = findMode();
+    let mode;
+
+    try {
+        mode = findMode();
+    } catch {}
+
     const isCore = typeof mode === "undefined";
+    
     try {
         yield all(
             [

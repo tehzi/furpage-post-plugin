@@ -2,14 +2,17 @@ import React, { FC, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import { deleteAuth, vkAuth } from "~actions/login";
+import AppStore from "~types/AppStore";
 
 const Popup: FC = () => {
-    const innerSelectedProperties = useSelector(
-        ({ login: { auth: { userId = null } = {} } = {} }) => ({
-            loginIn: !!userId,
-        }),
+    let loginIn = false;
+    const innerSelectedProperties = useSelector<AppStore, Pick<AppStore, "login">>(
+        ({ login }) => ({ login  }),
     );
-    const { loginIn } = innerSelectedProperties;
+    const { login } = innerSelectedProperties;
+
+    loginIn = !!login?.auth?.userId;
+
     const dispatch = useDispatch();
 
     const onAuthToggle = (): void => {

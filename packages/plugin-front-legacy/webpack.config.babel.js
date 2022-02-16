@@ -17,12 +17,12 @@ const config = {
     },
     html: {
         filename: "background.html",
-        inject: false,
+        chunks: ["background"],
         template: `${__dirname}/src/html/background.html`,
     },
     popup: {
         filename: "popup.html",
-        inject: false,
+        chunks: ["popup"],
         template: `${__dirname}/src/html/popup.html`,
     },
 };

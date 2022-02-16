@@ -32,6 +32,7 @@ export interface VKUrl {
 }
 
 function* startAuth(): SagaIterator {
+    debugger
     const uri = new Uri("https://oauth.vk.com/authorize");
     uri.addQuery({
         client_id: CLIENT_ID,
