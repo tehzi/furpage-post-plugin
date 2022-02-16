@@ -9,6 +9,7 @@
   "scripts": {
     "bootstrap": "lerna clean --yes && lerna bootstrap",
     "setup": "yarn install --frozen-lockfile && yarn run bootstrap",
+    "build:legacy": "lerna run build --stream",
     "build:legacy:dev": "lerna run build:dev --stream"
   },
   "devDependencies": {
