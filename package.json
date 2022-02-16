@@ -8,7 +8,7 @@
   "license": "LGPL-3.0+",
   "scripts": {
     "bootstrap": "lerna clean --yes && lerna bootstrap",
-    "setup": "yarn install --frozen-lockfile && lerna bootstrap --hoist",
+    "setup": "yarn install --frozen-lockfile && lerna bootstrap",
     "build:legacy": "lerna run build --stream",
     "build:legacy:dev": "lerna run build:dev --stream"
   },
