@@ -9,8 +9,8 @@
   "scripts": {
     "bootstrap": "lerna clean --yes && lerna bootstrap",
     "setup": "yarn install --frozen-lockfile && lerna bootstrap",
-    "build:legacy": "lerna run build --stream",
-    "build:legacy:dev": "lerna run build:dev --stream"
+    "build:legacy": "lerna run build --scope=plugin-front-legacy --stream",
+    "build:legacy:dev": "lerna run build:dev --scope=plugin-front-legacy --stream"
   },
   "devDependencies": {
     "eslint": "^8.9.0",

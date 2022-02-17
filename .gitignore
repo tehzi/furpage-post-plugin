@@ -2,4 +2,6 @@ node_modules
 .vscode
 dist
 lerna-debug.log
-.env
+.env.local
+.env.prod
+release
