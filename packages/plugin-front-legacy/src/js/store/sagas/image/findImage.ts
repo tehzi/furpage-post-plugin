@@ -1,21 +1,11 @@
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { setLoading } from "~actions/login";
-import {
-    CHROME_TAB_COMPLETE,
-    chromeError,
-    TAB_CHANGED,
-    ChromeTabArgs,
-} from "~actions/chrome";
+import { CHROME_TAB_COMPLETE, chromeError, TAB_CHANGED, ChromeTabArgs } from "~actions/chrome";
 import { findImageUrl } from "~helpers/mode";
-import {
-    ADD_IMAGE_LINK_TO_STORE,
-    addImageLinkToStore,
-    UPDATE_IMAGE,
-    updateImage,
-} from "~actions/images";
-import getStatus from "~api/images/getStatus";
-import authorizeFlow from "../flows/authorizeFlow";
+import { ADD_IMAGE_LINK_TO_STORE, addImageLinkToStore, UPDATE_IMAGE, updateImage } from "~actions/images";
+// import getStatus from "~api/images/getStatus";
+// import authorizeFlow from "../flows/authorizeFlow";
 import { ActionWithPayload } from "~types/actions";
 
 function* tabComplete({
@@ -49,18 +39,14 @@ function* tabComplete({
     }
 }
 
-function* updateImageStatus({
-    payload: url,
-}: ActionWithPayload<string>): SagaIterator {
+function* updateImageStatus({ payload: url }: ActionWithPayload<string>): SagaIterator {
     try {
-        const hasPermission = yield select(
-            ({ login: { hasPermission: hasPerm } }) => hasPerm,
-        );
+        const hasPermission = yield select(({ login: { hasPermission: hasPerm } }) => hasPerm);
         const isImageResource = !!findImageUrl(url);
         if (hasPermission && isImageResource) {
             try {
                 yield put(setLoading(true));
-                console.log(yield call(authorizeFlow, getStatus, url));
+                // console.log(yield call(authorizeFlow, getStatus, url));
                 // TODO WIP
                 // const { base = "0", queue = "0" } = yield call(getStatus, url);
                 // yield put(setLoading(false));
@@ -80,9 +66,7 @@ function* updateImageStatus({
     } catch {}
 }
 
-function* tabChanged({
-    payload: { url },
-}: ActionWithPayload<ChromeTabArgs["tab"]>): SagaIterator {
+function* tabChanged({ payload: { url } }: ActionWithPayload<ChromeTabArgs["tab"]>): SagaIterator {
     try {
         yield put(updateImage(url));
     } catch (error) {

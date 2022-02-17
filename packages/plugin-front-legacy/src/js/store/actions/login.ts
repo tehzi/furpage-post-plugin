@@ -8,7 +8,7 @@ export interface Auth {
 }
 
 export const AUTH = "AUTH";
-export const auth: CallableAction<Auth> = payload => ({
+export const auth: CallableAction<Auth> = (payload) => ({
     type: AUTH,
     payload,
 });
@@ -37,7 +37,7 @@ export const ACCESS_DENY = "ACCESS_DENY";
 export const accessDeny: CallableAction = () => ({ type: ACCESS_DENY });
 
 export const SET_LOADING = "SET_LOADING";
-export const setLoading: CallableAction<boolean> = payload => ({
+export const setLoading: CallableAction<boolean> = (payload) => ({
     type: SET_LOADING,
     payload,
 });

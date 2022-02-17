@@ -1,0 +1,46 @@
+name: Furpage ci/cd
+
+on: push
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
+
+      - name: Install
+        run: yarn run setup
+
+  eslint:
+    runs-on: ubuntu-20.04
+    needs: setup
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
+
+      - name: Run eslint
+        run: yarn run eslint
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: 
+      - setup
+      - eslint
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
+
+      - name: Build Plugin
+        run: yarn run build:legacy
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: packages/plugin-front-legacy/release

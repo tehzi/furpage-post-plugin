@@ -1,12 +1,4 @@
-import {
-    ACCESS_ALLOW,
-    ACCESS_DENY,
-    AUTH,
-    DELETED_AUTH,
-    SET_LOADING,
-    LoginActions,
-    Auth,
-} from "~actions/login";
+import { ACCESS_ALLOW, ACCESS_DENY, AUTH, DELETED_AUTH, SET_LOADING, LoginActions, Auth } from "~actions/login";
 import { Payload } from "~types/actions";
 
 export interface LoginReducer {
@@ -23,10 +15,7 @@ const DEFAULT_STATE: LoginReducer = {
     loading: false,
 };
 
-export default function login(
-    state = DEFAULT_STATE,
-    action: LoginActions,
-): LoginReducer {
+export default function login(state = DEFAULT_STATE, action: LoginActions): LoginReducer {
     if (action.type === AUTH) {
         const { payload: auth } = action as Payload<Auth>;
         return {

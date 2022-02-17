@@ -1,27 +1,11 @@
-import {
-    call,
-    put,
-    race,
-    select,
-    take,
-    takeEvery,
-    takeLatest,
-} from "redux-saga/effects";
+import { call, put, race, select, take, takeEvery, takeLatest } from "redux-saga/effects";
 import Uri from "urijs";
 import { SagaIterator } from "redux-saga";
-import {
-    accessAllow,
-    accessDeny,
-    vkApiAuth,
-    AUTH,
-    auth,
-    deleteAuth,
-    VK_AUTH,
-} from "~actions/login";
+import { accessAllow, accessDeny, vkApiAuth, AUTH, auth, deleteAuth, VK_AUTH } from "~actions/login";
 import { CHROME_TAB_COMPLETE } from "~actions/chrome";
 import { findBlank } from "~helpers/mode";
 import getGroupPermissionById from "~api/permission/getGroupPermissionById";
-import getApiPermission from "~api/permission/getApiPermission";
+// import getApiPermission from "~api/permission/getApiPermission";
 
 export interface VKUrl {
     access_token: string;
@@ -51,14 +35,12 @@ function* startAuth(): SagaIterator {
             if (vkAuth) {
                 break;
             }
-            ({ payload: { tab: { url = false, id = false } = {} } = {} } =
-                complete || {});
+            ({ payload: { tab: { url = false, id = false } = {} } = {} } = complete || {});
         } while (!(url && findBlank(url)));
         const blankUrl = new Uri(url);
-        const {
-            access_token: accessToken = false,
-            user_id: userId = false,
-        } = Uri.parseQuery(blankUrl.fragment()) as unknown as VKUrl;
+        const { access_token: accessToken = false, user_id: userId = false } = Uri.parseQuery(
+            blankUrl.fragment(),
+        ) as unknown as VKUrl;
         if (accessToken && userId) {
             try {
                 // TODO remove auth for a future realization
@@ -74,9 +56,7 @@ function* startAuth(): SagaIterator {
                         // apiRefreshToken,
                     }),
                 );
-            } catch(err) {
-                console.log(err)
-                debugger
+            } catch {
                 yield put(accessDeny());
                 yield put(deleteAuth());
             }
@@ -90,16 +70,10 @@ function* startAuth(): SagaIterator {
 
 function* checkGroupPermission(): SagaIterator {
     try {
-        const accessToken = yield select(
-            ({ login: { auth: { accessToken: token = null } = {} } }) => token,
-        );
-        
-        const { admin_level: adminLevel = 0 } = yield call(
-            getGroupPermissionById,
-            process.env.GROUP,
-            accessToken,
-        );
-        
+        const accessToken = yield select(({ login: { auth: { accessToken: token = null } = {} } }) => token);
+
+        const { admin_level: adminLevel = 0 } = yield call(getGroupPermissionById, process.env.GROUP, accessToken);
+
         if (adminLevel > 1) {
             yield put(accessAllow());
         } else {

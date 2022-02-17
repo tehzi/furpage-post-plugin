@@ -11,10 +11,6 @@ export interface FurAffinityProps {
     mount: Element;
 }
 
-const FurAffinity: FC<FurAffinityProps> = ({ mount, children }) =>
-    createPortal(<>{children}</>, mount);
+const FurAffinity: FC<FurAffinityProps> = ({ mount, children }) => createPortal(<>{children}</>, mount);
 
-export default compose(
-    withSite(findFa(), imgSelector, tagSelector),
-    memo,
-)(FurAffinity) as ComponentType;
+export default compose(withSite(findFa(), imgSelector, tagSelector), memo)(FurAffinity) as ComponentType;

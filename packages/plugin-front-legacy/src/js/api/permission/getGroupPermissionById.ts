@@ -15,14 +15,9 @@ export default async function getGroupPermissionById(
             access_token: accessToken,
             v,
         }).toString();
-        const response = await fetch(
-            `https://api.vk.com/method/groups.getById?${urlSearch}`,
-        );
+        const response = await fetch(`https://api.vk.com/method/groups.getById?${urlSearch}`);
         if (response.ok) {
-            const {
-                response: [group] = [],
-                error = false,
-            } = await response.json();
+            const { response: [group] = [], error = false } = await response.json();
             return group || error;
         }
     }

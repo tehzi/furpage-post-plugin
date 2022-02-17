@@ -14,11 +14,7 @@ export type TAppProperties = {
     isPopup?: boolean;
 };
 
-const App: FC<TAppProperties> = ({
-    store,
-    isSite = false,
-    isPopup = false,
-}) => {
+const App: FC<TAppProperties> = ({ store, isSite = false, isPopup = false }) => {
     sagaMiddleware.run(rootSaga);
 
     return (

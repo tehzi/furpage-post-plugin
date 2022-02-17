@@ -87,19 +87,21 @@ export default (_, { mode }) => ({
         new HtmlPlugin(config.popup),
         !isDevelopment(mode) &&
             new FileManager({
-                onEnd: [
-                    {
-                        mkdir: ["./release"],
-                    },
-                    {
-                        archive: [
-                            {
-                                source: config.path,
-                                destination: `${__dirname}/release/${packageJson.name}-${packageJson.version}.zip`,
-                            },
-                        ],
-                    },
-                ],
+                events: {
+                    onEnd: [
+                        {
+                            mkdir: ["./release"],
+                        },
+                        {
+                            archive: [
+                                {
+                                    source: config.path,
+                                    destination: `${__dirname}/release/${packageJson.name}-${packageJson.version}.zip`,
+                                },
+                            ],
+                        },
+                    ],
+                }
             }),
     ].filter(Boolean),
 });

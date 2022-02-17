@@ -8,15 +8,11 @@ export const isDevelopment = process.env.NODE_ENV === "development";
 export const sagaMiddleware = createSagaMiddleware();
 export const middleware = [sagaMiddleware];
 
-export default function configureStore(
-    reducer: Reducer<AppStore>,
-): Store<AppStore> {
+export default function configureStore(reducer: Reducer<AppStore>): Store<AppStore> {
     const composeEnhancers = isDevelopment
-        ? composeWithDevTools({ realtime: true, hostname: 'localhost', port: 8001, })
+        ? composeWithDevTools({ realtime: true, hostname: "localhost", port: 8001 })
         : compose;
-    const store = composeEnhancers(applyMiddleware(...middleware))(createStore)(
-        reducer,
-    );
+    const store = composeEnhancers(applyMiddleware(...middleware))(createStore)(reducer);
     wrapStore(store, { portName: "FUR_PAGE" });
 
     return store;
