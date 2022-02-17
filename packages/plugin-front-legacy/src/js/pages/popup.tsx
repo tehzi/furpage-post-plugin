@@ -6,23 +6,9 @@ import App, { TAppProperties } from "../App";
 import AppStore from "~types/AppStore";
 import { applyMiddleware, Store } from "webext-redux";
 
-const renderApp = (
-    Application: ComponentType<TAppProperties>,
-    mountNode: Element,
-): void => {
-    const store = applyMiddleware(
-        new Store({ portName: "FUR_PAGE" }),
-        ...middleware,
-    );
-    render(
-        <Application
-            store={(store as unknown) as ReduxStore<AppStore>}
-            isPopup
-        />,
-        mountNode,
-    );
+const renderApp = (Application: ComponentType<TAppProperties>, mountNode: Element): void => {
+    const store = applyMiddleware(new Store({ portName: "FUR_PAGE" }), ...middleware);
+    render(<Application store={store as unknown as ReduxStore<AppStore>} isPopup />, mountNode);
 };
 
-document.addEventListener("DOMContentLoaded", () =>
-    renderApp(App, document.querySelector("#app")),
-);
+document.addEventListener("DOMContentLoaded", () => renderApp(App, document.querySelector("#app")));

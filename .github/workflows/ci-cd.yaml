@@ -8,50 +8,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/workflows/composite/setup
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16
-
-      # - uses: actions/cache@v2
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     path: |
-      #       node_modules
-      #       */*/node_modules
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
 
       - name: Install
         run: yarn run setup
 
-  build:
+  eslint:
     runs-on: ubuntu-20.04
     needs: setup
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/workflows/composite/setup
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
 
-      # - uses: actions/cache@v2
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     path: |
-      #       node_modules
-      #       */*/node_modules
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-    
+      - name: Run eslint
+        run: yarn run eslint
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: 
+      - setup
+      - eslint
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
 
       - name: Build Plugin
         run: yarn run build:legacy

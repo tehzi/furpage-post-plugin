@@ -5,10 +5,10 @@ import { chromeError, tabChanged } from "~actions/chrome";
 type TabActivateChannel = () => EventChannel<chrome.tabs.Tab>;
 
 const tabActivateChannel: TabActivateChannel = () =>
-    eventChannel(emit => {
+    eventChannel((emit) => {
         const onActivate = ({ tabId }: chrome.tabs.TabActiveInfo): void => {
-            chrome.tabs.query({}, tabs => {
-                const [tab] = tabs.filter(({ id }) => tabId === id);
+            chrome.tabs.query({}, (tabs) => {
+                const tab = tabs.find(({ id }) => tabId === id);
                 emit(tab);
             });
         };

@@ -6,9 +6,7 @@ import AppStore from "~types/AppStore";
 
 const Popup: FC = () => {
     let loginIn = false;
-    const innerSelectedProperties = useSelector<AppStore, Pick<AppStore, "login">>(
-        ({ login }) => ({ login  }),
-    );
+    const innerSelectedProperties = useSelector<AppStore, Pick<AppStore, "login">>(({ login }) => ({ login }));
     const { login } = innerSelectedProperties;
 
     loginIn = !!login?.auth?.userId;

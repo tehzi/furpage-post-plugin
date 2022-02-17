@@ -10,10 +10,6 @@ export interface DeviantArtProps {
     mount: Element;
 }
 
-const DeviantArt: FC<DeviantArtProps> = ({ mount, children }) =>
-    createPortal(<>{children}</>, mount);
+const DeviantArt: FC<DeviantArtProps> = ({ mount, children }) => createPortal(<>{children}</>, mount);
 
-export default compose(
-    withSite(findDa(), imgSelector),
-    memo,
-)(DeviantArt) as ComponentType;
+export default compose(withSite(findDa(), imgSelector), memo)(DeviantArt) as ComponentType;

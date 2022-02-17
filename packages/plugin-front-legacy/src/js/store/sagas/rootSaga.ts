@@ -19,7 +19,7 @@ export default function* rootSaga(): SagaIterator {
     } catch {}
 
     const isCore = typeof mode === "undefined";
-    
+
     try {
         yield all(
             [
@@ -31,7 +31,7 @@ export default function* rootSaga(): SagaIterator {
                 isCore && fork(findImage),
                 isCore && fork(sendImage),
                 fork(store),
-            ].filter(item => item),
+            ].filter((item) => item),
         );
 
         if (isCore) {

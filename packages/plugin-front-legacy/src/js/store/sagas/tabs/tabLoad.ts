@@ -1,21 +1,12 @@
 import { eventChannel, EventChannel, SagaIterator } from "redux-saga";
 import { call, put, take } from "redux-saga/effects";
-import {
-    chromeError,
-    chromeTabComplete,
-    chromeTabLoading,
-    ChromeTabArgs,
-} from "~actions/chrome";
+import { chromeError, chromeTabComplete, chromeTabLoading, ChromeTabArgs } from "~actions/chrome";
 
 export type TabChangeChannel = () => EventChannel<ChromeTabArgs>;
 
 const tabChangeChannel: TabChangeChannel = () =>
-    eventChannel(emit => {
-        const tabHandler = (
-            tabId: number,
-            changeInfo: chrome.tabs.TabChangeInfo,
-            tab: chrome.tabs.Tab,
-        ): void => {
+    eventChannel((emit) => {
+        const tabHandler = (tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void => {
             emit({
                 tabId,
                 changeInfo,

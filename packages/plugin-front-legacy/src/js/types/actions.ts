@@ -6,6 +6,4 @@ export type Payload<T> = {
 
 export type ActionWithPayload<T> = Partial<Payload<T>> & Action<string>;
 
-export type CallableAction<T = undefined> = (
-    payload?: T,
-) => ActionWithPayload<T>;
+export type CallableAction<T = undefined> = (payload?: T) => ActionWithPayload<T>;

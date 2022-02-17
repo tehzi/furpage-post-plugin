@@ -1,14 +1,6 @@
 import { call, put, take, takeEvery } from "redux-saga/effects";
 import { EventChannel, eventChannel, SagaIterator } from "redux-saga";
-import {
-    Auth,
-    auth,
-    AUTH,
-    DELETE_AUTH,
-    deletedAuth,
-    FIND_STORED_AUTH,
-    unauthorized,
-} from "~actions/login";
+import { Auth, auth, AUTH, DELETE_AUTH, deletedAuth, FIND_STORED_AUTH, unauthorized } from "~actions/login";
 import { authError, authRead, authSaved } from "~actions/store";
 import { ActionWithPayload } from "~types/actions";
 
@@ -25,13 +17,10 @@ const setChannel: SetChannel = (
     // apiAccessToken,
     // apiRefreshToken,
 ) => {
-    return eventChannel(emit => {
-        chrome.storage.sync.set(
-            { accessToken, userId/* , apiAccessToken, apiRefreshToken */ },
-            () => {
-                emit(true);
-            },
-        );
+    return eventChannel((emit) => {
+        chrome.storage.sync.set({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ }, () => {
+            emit(true);
+        });
         return (): void => {};
     });
 };
@@ -39,11 +28,11 @@ const setChannel: SetChannel = (
 export type GetChannel = () => EventChannel<Auth>;
 
 const getChannel: GetChannel = () => {
-    return eventChannel(emit => {
+    return eventChannel((emit) => {
         chrome.storage.sync.get(
-            ["accessToken", "userId"/* , "apiAccessToken", "apiRefreshToken" */],
-            ({ accessToken, userId/* , apiAccessToken, apiRefreshToken */ }) => {
-                emit({ accessToken, userId/* , apiAccessToken, apiRefreshToken */ });
+            ["accessToken", "userId" /* , "apiAccessToken", "apiRefreshToken" */],
+            ({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ }) => {
+                emit({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ });
             },
         );
         return (): void => {};
@@ -53,19 +42,16 @@ const getChannel: GetChannel = () => {
 export type RemoveChannel = () => EventChannel<boolean>;
 
 const removeChannel: RemoveChannel = () => {
-    return eventChannel(emit => {
-        chrome.storage.sync.remove(
-            ["accessToken", "userId"/* , "apiAccessToken", "apiRefreshToken" */],
-            () => {
-                emit(true);
-            },
-        );
+    return eventChannel((emit) => {
+        chrome.storage.sync.remove(["accessToken", "userId" /* , "apiAccessToken", "apiRefreshToken" */], () => {
+            emit(true);
+        });
         return (): void => {};
     });
 };
 
 function* saveAuth({
-    payload: { accessToken, userId/* , apiAccessToken, apiRefreshToken  */},
+    payload: { accessToken, userId /* , apiAccessToken, apiRefreshToken  */ },
 }: ActionWithPayload<Auth>): SagaIterator {
     try {
         const saveChannel = yield call(
@@ -92,10 +78,8 @@ function* putAuthToRedux(): SagaIterator {
             // apiAccessToken = false,
             // apiRefreshToken = false,
         } = yield take(readChannel);
-        if (accessToken && userId/*  && apiAccessToken && apiRefreshToken */) {
-            yield put(
-                auth({ accessToken, userId/* , apiAccessToken, apiRefreshToken */ }),
-            );
+        if (accessToken && userId /*  && apiAccessToken && apiRefreshToken */) {
+            yield put(auth({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ }));
             yield put(authRead());
         } else {
             yield put(unauthorized());

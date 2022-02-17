@@ -12,9 +12,7 @@ export interface Permission {
     refresh_token: string;
 }
 
-export default async function getApiPermission(
-    accessToken: string = null,
-): Promise<Permission | ApiError | never> {
+export default async function getApiPermission(accessToken: string = null): Promise<Permission | ApiError | never> {
     if (!accessToken && typeof accessToken !== "string") {
         throw new Error("No access token");
     }

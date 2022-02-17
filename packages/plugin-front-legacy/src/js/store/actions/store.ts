@@ -10,4 +10,4 @@ export const AUTH_READ = "AUTH_READ";
 export const authRead: CallableAction = () => ({ type: AUTH_READ });
 
 export const AUTH_ERROR = "AUTH_ERROR";
-export const authError: CallableAction<Error> = payload => ({ type: AUTH_ERROR, payload });
+export const authError: CallableAction<Error> = (payload) => ({ type: AUTH_ERROR, payload });

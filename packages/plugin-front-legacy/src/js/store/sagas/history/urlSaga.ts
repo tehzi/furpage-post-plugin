@@ -5,7 +5,7 @@ import { errorUrl, updateUrl } from "~actions/history";
 export type TUrlReloadChannel = () => EventChannel<string>;
 
 const urlReloadChannel: TUrlReloadChannel = () =>
-    eventChannel(emit => {
+    eventChannel((emit) => {
         let url = window.location.href;
         const urlInterval = setInterval(() => {
             const { href } = window.location;
