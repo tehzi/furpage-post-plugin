@@ -53,3 +53,8 @@ jobs:
 
       - name: Build Plugin
         run: yarn run build:legacy
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: packages/plugin-front-legacy/release
