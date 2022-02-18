@@ -69,6 +69,10 @@ jobs:
             plugin_front_legacy:
               - 'packages/plugin-front-legacy/**'
 
-      - name: Get cache
+      - name: Get artifact
         if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
-        uses: ./.github/workflows/composite/setup
+        uses: actions/download-artifact@v2
+
+      - name: Display structure of downloaded files
+        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        run: ls -R
