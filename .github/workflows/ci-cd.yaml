@@ -14,6 +14,11 @@ jobs:
       - name: Install
         run: yarn run setup
 
+  automatic-release:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    needs: setup
+
   eslint:
     runs-on: ubuntu-20.04
     needs: setup

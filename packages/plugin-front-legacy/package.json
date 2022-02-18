@@ -1,6 +1,6 @@
 {
   "name": "plugin-front-legacy",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/tehzi/furpage-post-plugin",
   "author": "Mikhail Zi",
