@@ -18,6 +18,14 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs: setup
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
+
+      - name: Make release
+        run: yarn run release
 
   eslint:
     runs-on: ubuntu-20.04
