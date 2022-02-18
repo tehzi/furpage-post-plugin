@@ -35,44 +35,45 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: dorny/paths-filter@v2
-        id: legacy_filter
+        id: legacy-filter
         with:
           filters: |
-            plugin_front_legacy:
+            plugin-front-legacy:
               - 'packages/plugin-front-legacy/**'
 
       - name: Get cache
-        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: ./.github/workflows/composite/setup
 
       - name: Build Plugin
-        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         run: yarn run build:legacy
 
       - name: Create Artifact
-        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: actions/upload-artifact@v2
         with:
           path: packages/plugin-front-legacy/release
 
   release-legacy-plugin:
     runs-on: ubuntu-20.04
+    if: github.ref == "refs/heads/main"
     needs: 
       - build-legacy-plugin
     steps:
       - uses: actions/checkout@v2
 
       - uses: dorny/paths-filter@v2
-        id: legacy_filter
+        id: legacy-filter
         with:
           filters: |
-            plugin_front_legacy:
+            plugin-front-legacy:
               - 'packages/plugin-front-legacy/**'
 
       - name: Get artifact
-        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: actions/download-artifact@v2
 
       - name: Display structure of downloaded files
-        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         run: ls -R
