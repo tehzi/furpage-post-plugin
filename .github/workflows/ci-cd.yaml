@@ -54,3 +54,21 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: packages/plugin-front-legacy/release
+
+  release-legacy-plugin:
+    runs-on: ubuntu-20.04
+    needs: 
+      - build-legacy-plugin
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: legacy_filter
+        with:
+          filters: |
+            plugin_front_legacy:
+              - 'packages/plugin-front-legacy/**'
+
+      - name: Get cache
+        if: ${{ steps.legacy_filter.outputs.plugin_front_legacy == 'true' }}
+        uses: ./.github/workflows/composite/setup
