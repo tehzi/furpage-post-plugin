@@ -102,9 +102,11 @@ jobs:
 
       - name: Upload extension to the chrome store
         if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
-        uses: mnao305/chrome-extension-upload@2.2.0
+        uses: Passiverecords/chrome-extension-upload-action@1.4.1
         with:
-          file-path: artifact/${{ env.GITHUB_ARTIFACT }}
-          extension-id: ${{ secrets.APP_ID }}
-          client-id: ${{ secrets.CLIENT_ID }}
           refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          file-name: artifact/${{ env.GITHUB_ARTIFACT }}
+          app-id: ${{ secrets.APP_ID }}
+          publish: true
