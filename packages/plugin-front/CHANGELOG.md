@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.1.0 (2022-02-19)
+
+
+### Features
+
+* Test ci ([#22](https://github.com/tehzi/furpage-post-plugin/issues/22)) ([1be12cf](https://github.com/tehzi/furpage-post-plugin/commit/1be12cfe4b31b52ed10f03a6eea257a8911a08ea))
+
+
+
+
+
 ## 0.0.4 (2022-02-19)
 
 
