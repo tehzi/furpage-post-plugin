@@ -19,7 +19,6 @@ const App: FC<TAppProperties> = ({ store, isSite = false, isPopup = false }) => 
 
     return (
         <StrictMode>
-            {" "}
             <Provider store={store}>
                 <>
                     {isSite && (
