@@ -16,7 +16,7 @@ jobs:
 
   automatic-release:
     runs-on: ubuntu-20.04
-    if: ${{ github.ref == 'refs/heads/main' &&  always() }}
+    if: ${{ github.ref == 'refs/heads/main' && always() }}
     needs: release-legacy-plugin
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,10 @@ jobs:
         uses: ./.github/workflows/composite/setup
 
       - name: Make release
-        run: yarn run release
+        run: |
+          git config --global user.email "automatic-release@github.com"
+          git config --global user.name "Automatic Release Bot"
+          yarn run release
 
   eslint:
     runs-on: ubuntu-20.04
