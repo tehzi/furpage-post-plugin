@@ -103,7 +103,7 @@ jobs:
         if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: mnao305/chrome-extension-upload@2.2.0
         with:
-          file-path: ./artifact/${{ env.GITHUB_ARTIFACT }}
+          file-path: artifact/${{ env.GITHUB_ARTIFACT }}
           extension-id: ${{ secrets.APP_ID }}
           client-id: ${{ secrets.CLIENT_ID }}
           refresh-token: ${{ secrets.REFRESH_TOKEN }}
