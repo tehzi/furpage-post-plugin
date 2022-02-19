@@ -1,6 +1,6 @@
 {
   "name": "plugin-front-legacy",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/tehzi/furpage-post-plugin",
   "author": "Mikhail Zi",
@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "remotedev": "remotedev --hostname=localhost --port=8001",
     "build": "webpack --config webpack.config.babel.js --mode production",
-    "build:dev": "webpack --config webpack.config.babel.js --mode development --watch --progress"
+    "build:dev": "webpack --config webpack.config.babel.js --mode development --watch --progress "
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

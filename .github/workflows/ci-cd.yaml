@@ -14,6 +14,19 @@ jobs:
       - name: Install
         run: yarn run setup
 
+  automatic-release:
+    runs-on: ubuntu-20.04
+    if: ${{ github.ref == 'refs/heads/main' &&  always() }}
+    needs: release-legacy-plugin
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get cache
+        uses: ./.github/workflows/composite/setup
+
+      - name: Make release
+        run: yarn run release
+
   eslint:
     runs-on: ubuntu-20.04
     needs: setup
@@ -26,7 +39,7 @@ jobs:
       - name: Run eslint
         run: yarn run eslint
 
-  build:
+  build-legacy-plugin:
     runs-on: ubuntu-20.04
     needs: 
       - setup
@@ -34,13 +47,46 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: dorny/paths-filter@v2
+        id: legacy-filter
+        with:
+          filters: |
+            plugin-front-legacy:
+              - 'packages/plugin-front-legacy/**'
+
       - name: Get cache
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: ./.github/workflows/composite/setup
 
       - name: Build Plugin
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         run: yarn run build:legacy
 
       - name: Create Artifact
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
         uses: actions/upload-artifact@v2
         with:
           path: packages/plugin-front-legacy/release
+
+  release-legacy-plugin:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    needs: 
+      - build-legacy-plugin
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: legacy-filter
+        with:
+          filters: |
+            plugin-front-legacy:
+              - 'packages/plugin-front-legacy/**'
+
+      - name: Get artifact
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
+        uses: actions/download-artifact@v2
+
+      - name: Display structure of downloaded files
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
+        run: ls -R

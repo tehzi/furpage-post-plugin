@@ -12,7 +12,8 @@
     "build:legacy": "lerna run build --scope=plugin-front-legacy --stream",
     "build:legacy:dev": "lerna run build:dev --scope=plugin-front-legacy --stream",
     "eslint": "eslint --quiet --config ./.eslintrc.js --ext .ts,.tsx ./",
-    "eslint:fix": "eslint --quiet --fix --config ./.eslintrc.js --ext .ts,.tsx ./"
+    "eslint:fix": "eslint --quiet --fix --config ./.eslintrc.js --ext .ts,.tsx ./",
+    "release": "lerna version --yes --conventional-commits -m 'Automatic release'"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.12.0",
