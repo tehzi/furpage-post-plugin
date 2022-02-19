@@ -20,6 +20,8 @@ jobs:
     needs: release-legacy-plugin
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
 
       - name: Get cache
         uses: ./.github/workflows/composite/setup
@@ -36,6 +38,7 @@ jobs:
         run: |
           git config --global user.email "automatic-release@github.com"
           git config --global user.name "Automatic Release Bot"
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
           yarn run release
 
   eslint:
