@@ -16,8 +16,8 @@ jobs:
 
   automatic-release:
     runs-on: ubuntu-20.04
-    if: github.ref == 'refs/heads/main'
-    needs: setup
+    if: github.ref == 'refs/heads/main' && ${{ always() }}
+    needs: release-legacy-plugin
     steps:
       - uses: actions/checkout@v2
 
