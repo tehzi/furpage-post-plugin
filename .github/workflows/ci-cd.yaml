@@ -95,4 +95,17 @@ jobs:
 
       - name: Display structure of downloaded files
         if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
-        run: ls -R
+        run: |
+          ls -R
+          echo "GITHUB_ARTIFACT=$(basename ./artifact/*.zip)" >> $GITHUB_ENV
+
+      - name: Upload extension to the chrome store
+        if: ${{ steps.legacy-filter.outputs.plugin-front-legacy == 'true' }}
+        uses: Passiverecords/chrome-extension-upload-action@1.4.1
+        with:
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          file-name: ${{ env.GITHUB_ARTIFACT }}
+          app-id: ${{ secrets.APP_ID }}
+          publish: true
