@@ -26,15 +26,7 @@ jobs:
       - name: Get cache
         uses: ./.github/workflows/composite/setup
 
-      - uses: dorny/paths-filter@v2
-        id: release-filter
-        with:
-          filters: |
-            packages:
-              - 'packages/**'
-
       - name: Make release
-        if: ${{ steps.release-filter.outputs.packages == 'true' }}
         run: |
           git config --global user.email "automatic-release@github.com"
           git config --global user.name "Automatic Release Bot"
