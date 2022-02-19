@@ -106,6 +106,6 @@ jobs:
           refresh-token: ${{ secrets.REFRESH_TOKEN }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-          file-name: ${{ env.GITHUB_ARTIFACT }}
+          file-name: ./artifact/${{ env.GITHUB_ARTIFACT }}
           app-id: ${{ secrets.APP_ID }}
           publish: true
