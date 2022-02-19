@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/tehzi/furpage-post-plugin/compare/plugin-front-legacy@1.1.1...plugin-front-legacy@1.1.2) (2022-02-19)
+
+
+### Bug Fixes
+
+* last test ci ([#26](https://github.com/tehzi/furpage-post-plugin/issues/26)) ([c44e5a6](https://github.com/tehzi/furpage-post-plugin/commit/c44e5a6a1b6cc3beefbbf9e3812a990a852ae8f6))
+
+
+
+
+
 ## [1.1.1](https://github.com/tehzi/furpage-post-plugin/compare/plugin-front-legacy@1.1.0...plugin-front-legacy@1.1.1) (2022-02-19)
 
 
