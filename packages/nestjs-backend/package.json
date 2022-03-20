@@ -21,10 +21,13 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@apollo/gateway": "^0.48.1",
     "@nestjs-query/core": "^0.30.0",
     "@nestjs-query/query-graphql": "^0.30.0",
     "@nestjs-query/query-typeorm": "^0.30.0",
+    "@nestjs/apollo": "^10.0.4",
     "@nestjs/common": "^8.3.1",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.3.1",
     "@nestjs/graphql": "^10.0.4",
     "@nestjs/platform-express": "^8.3.1",
@@ -39,6 +42,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.4",
+    "ts-morph": "^13.0.3",
     "typeorm": "^0.2.43",
     "typescript": "^4.3.5"
   },

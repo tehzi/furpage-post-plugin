@@ -1,12 +1,15 @@
 version: "3.9"
 
 services: 
-    mongo:
-        restart: unless-stopped
-        image: mongo
-        environment: 
-            MONGO_INITDB_ROOT_USERNAME: admin
-            MONGO_INITDB_ROOT_PASSWORD: password
+    postgres:
+        build: ./docker/postgres
+        environment:
+            - POSTGRES_PASSWORD=password
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+            - "5481:5432"
+        volumes:
+            - ./db:/var/lib/postgresql/data/pgdata
             
     app:
         image: node:lts-alpine3.13
@@ -22,4 +25,4 @@ services:
             HOST: 0.0.0.0
         working_dir: /app
         depends_on: 
-            - mongo
+            - postgres
