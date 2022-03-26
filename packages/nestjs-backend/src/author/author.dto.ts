@@ -11,8 +11,11 @@ export class AuthorDto {
     @FilterableField()
     name!: string;
 
-    @FilterableField()
+    @FilterableField({ nullable: true })
     authorId!: string;
+
+    @FilterableField({ nullable: true })
+    vkID!: string;
 
     @Field()
     accessToken!: string;

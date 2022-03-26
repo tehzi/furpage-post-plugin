@@ -127,6 +127,7 @@ module.exports = {
         "react/no-unused-prop-types": "off",
         "unicorn/consistent-destructuring": "off",
         "no-debugger": "error",
+        "no-useless-constructor": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

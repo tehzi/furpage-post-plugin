@@ -15,22 +15,28 @@ export class ImagesEntity {
     @PrimaryGeneratedColumn()
     id!: string;
 
-    @Column({ nullable: true, unique: true })
+    @Column({ nullable: true })
     url!: string;
 
-    @Column({ nullable: true, length: 256 })
+    @Column("text", { nullable: true })
     tags!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, unique: true })
     fileUrl!: string;
 
     @Column({ nullable: true })
     base64Image!: string;
 
+    @Column({ nullable: true })
+    title!: string;
+
     @Column({ nullable: false })
     queueId!: string;
 
-    @ManyToOne((): ObjectType<QueueEntity> => QueueEntity, ({ images }) => images, { nullable: true })
+    @ManyToOne((): ObjectType<QueueEntity> => QueueEntity, ({ images }) => images, {
+        nullable: true,
+        onDelete: "CASCADE",
+    })
     @JoinColumn()
     queue: QueueEntity;
 

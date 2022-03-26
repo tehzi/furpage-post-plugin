@@ -1,20 +1,44 @@
-import URI from "urijs";
-
-export default async function addToQueue(tags, url, caption, imgUrl, userId) {
-    const { protocol } = new URL(url);
-    const uri = new URI(`${protocol}//furrycard.furries.ru/api.php`);
-    uri.addQuery({
-        method: "push",
-        tags: encodeURI(tags),
-        url,
-        caption: caption.replace(/'/g, ""),
-        img_url: imgUrl,
-        user_id: userId,
+export default async function addToQueue(queueId: string, url: string, title: string, tags: string, fileUrl: string): Promise<string | never> {
+    const queueResponse = await fetch(process.env.API_URL, {
+        method: "POST",
+        headers: {
+            // Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+            query: `
+                mutation addImage($queueId: String!, $url: String!, $title: String!, $tags: String!, $fileUrl: String!) {
+                    createOneImages(
+                        input: {
+                            images: {
+                                queueId: $queueId
+                                url: $url
+                                title: $title
+                                tags: $tags
+                                fileUrl: $fileUrl
+                            }
+                        }
+                    ) {
+                        id
+                    }
+                }
+            `,
+            variables: {
+                queueId,
+                url,
+                title,
+                tags,
+                fileUrl,
+            },
+        }),
     });
-    let response = await fetch(uri.normalize());
-    if (response.ok) {
-        response = await response.text();
-        return response;
+
+    if (queueResponse.ok) {
+        const queueJson = await queueResponse.json();
+        const {data: {createOneImages: {id}}} = queueJson;
+
+        return id;
     }
+
     throw new Error("Wrong request");
 }

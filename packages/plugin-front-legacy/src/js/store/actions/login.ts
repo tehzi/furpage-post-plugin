@@ -3,6 +3,7 @@ import { CallableAction } from "~types/actions";
 export interface Auth {
     accessToken: string;
     userId: string;
+    authorId: string;
     // apiAccessToken: string;
     // apiRefreshToken: string;
 }

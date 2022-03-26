@@ -17,6 +17,9 @@ export class ImagesDto {
     @FilterableField()
     fileUrl!: string;
 
+    @FilterableField({ nullable: true })
+    title!: string;
+
     @Field()
     base64Image!: string;
 

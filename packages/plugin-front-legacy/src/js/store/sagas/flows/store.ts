@@ -7,6 +7,7 @@ import { ActionWithPayload } from "~types/actions";
 export type SetChannel = (
     accessToken: Auth["accessToken"],
     userId: Auth["userId"],
+    authorId: Auth["authorId"],
     // apiAccessToken: Auth["apiAccessToken"],
     // apiRefreshToken: Auth["apiRefreshToken"],
 ) => EventChannel<boolean>;
@@ -14,6 +15,7 @@ export type SetChannel = (
 const setChannel: SetChannel = (
     accessToken,
     userId,
+    authorId,
     // apiAccessToken,
     // apiRefreshToken,
 ) => {
@@ -31,8 +33,8 @@ const getChannel: GetChannel = () => {
     return eventChannel((emit) => {
         chrome.storage.sync.get(
             ["accessToken", "userId" /* , "apiAccessToken", "apiRefreshToken" */],
-            ({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ }) => {
-                emit({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ });
+            ({ accessToken, userId, authorId, /* , apiAccessToken, apiRefreshToken */ }) => {
+                emit({ accessToken, userId, authorId, /* , apiAccessToken, apiRefreshToken */ });
             },
         );
         return (): void => {};
@@ -43,7 +45,7 @@ export type RemoveChannel = () => EventChannel<boolean>;
 
 const removeChannel: RemoveChannel = () => {
     return eventChannel((emit) => {
-        chrome.storage.sync.remove(["accessToken", "userId" /* , "apiAccessToken", "apiRefreshToken" */], () => {
+        chrome.storage.sync.remove(["accessToken", "userId", "authorId" /* , "apiAccessToken", "apiRefreshToken" */], () => {
             emit(true);
         });
         return (): void => {};
@@ -51,13 +53,14 @@ const removeChannel: RemoveChannel = () => {
 };
 
 function* saveAuth({
-    payload: { accessToken, userId /* , apiAccessToken, apiRefreshToken  */ },
+    payload: { accessToken, userId, authorId /* , apiAccessToken, apiRefreshToken  */ },
 }: ActionWithPayload<Auth>): SagaIterator {
     try {
         const saveChannel = yield call(
             setChannel,
             accessToken,
             userId,
+            authorId,
             // apiAccessToken,
             // apiRefreshToken,
         );
@@ -75,11 +78,12 @@ function* putAuthToRedux(): SagaIterator {
         const {
             accessToken = false,
             userId = false,
+            authorId = false,
             // apiAccessToken = false,
             // apiRefreshToken = false,
         } = yield take(readChannel);
-        if (accessToken && userId /*  && apiAccessToken && apiRefreshToken */) {
-            yield put(auth({ accessToken, userId /* , apiAccessToken, apiRefreshToken */ }));
+        if (accessToken && userId && authorId /*  && apiAccessToken && apiRefreshToken */) {
+            yield put(auth({ accessToken, userId, authorId /* , apiAccessToken, apiRefreshToken */ }));
             yield put(authRead());
         } else {
             yield put(unauthorized());

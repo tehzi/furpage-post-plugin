@@ -30,7 +30,7 @@ export const setAdded: CallableAction<string> = (payload) => ({
     payload,
 });
 
-export interface Image {
+export interface IAddImage {
     url: string;
     image: string;
     tags: string[];
@@ -38,7 +38,7 @@ export interface Image {
 }
 
 export const ADD_IMAGE = "ADD_IMAGE";
-export const addImage: CallableAction<Image> = (payload) => ({
+export const addImage: CallableAction<IAddImage> = (payload) => ({
     type: ADD_IMAGE,
     payload,
 });

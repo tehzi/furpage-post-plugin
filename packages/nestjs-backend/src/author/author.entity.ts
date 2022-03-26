@@ -10,6 +10,9 @@ export class AuthorEntity {
     @Column({ nullable: true })
     name!: string;
 
+    @Column({ nullable: true, unique: true })
+    vkID!: string;
+
     @CreateDateColumn()
     created!: Date;
 
@@ -22,8 +25,8 @@ export class AuthorEntity {
     @OneToMany(() => QueueEntity, ({ author }) => author)
     queue!: QueueEntity;
 
-    // @OneToMany(() => HistoryEntity, ({ author }) => author)
-    // history!: HistoryEntity;
+    @OneToMany(() => HistoryEntity, ({ author }) => author)
+    history!: HistoryEntity;
 
     @UpdateDateColumn()
     updated!: Date;

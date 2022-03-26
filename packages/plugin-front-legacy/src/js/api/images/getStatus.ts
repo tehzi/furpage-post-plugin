@@ -1,27 +1,56 @@
-const { API_URL } = process.env;
-
-interface Status {
+interface IStatusResponse {
+    id: string;
     url: string;
+    created: string;
 }
 
 export default async function getStatus(
-    accessToken: string = null,
+    // accessToken: string = null,
     url = window.location.href,
-): Promise<Status | never> {
-    if (!accessToken) {
-        throw new Error("No access token");
-    }
-    const statusResponse = await fetch(`${API_URL}/api/v1/history-art`, {
+): Promise<IStatusResponse | null | never> {
+    // if (!accessToken) {
+    //     throw new Error("No access token");
+    // }
+
+    const statusResponse = await fetch(process.env.API_URL, {
         method: "POST",
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            // Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json; charset=utf-8",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({
+            query: `
+                query getStatus($url: String!) {
+                    histories(filter: {url: {eq: $url}}) {
+                        edges {
+                            node {
+                                id
+                                url
+                                created
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: {
+                url,
+            },
+        }),
     });
+
     if (statusResponse.ok) {
-        const status = await statusResponse.json();
-        return status;
+        let status = {};
+        const statusJson = await statusResponse.json();
+        const {data: {histories: {edges}}} = statusJson;
+        
+        if (edges.length) {
+            ([{node: status}] = edges);
+
+            return status as IStatusResponse;
+        }
+        
+        return status as IStatusResponse;
     }
+
     throw new Error("Wrong request");
 }

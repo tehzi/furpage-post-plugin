@@ -11,10 +11,10 @@ export class HistoryDto {
     @FilterableField()
     url!: string;
 
-    @FilterableField()
+    @FilterableField({ nullable: true })
     tags!: string;
 
-    @Field()
+    @Field({ nullable: true })
     imgBase64!: string;
 
     @FilterableField({ nullable: false })
