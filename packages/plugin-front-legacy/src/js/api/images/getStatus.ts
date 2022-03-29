@@ -2,6 +2,7 @@ interface IStatusResponse {
     id: string;
     url: string;
     created: string;
+    date: number;
 }
 
 export default async function getStatus(
@@ -30,6 +31,9 @@ export default async function getStatus(
                             }
                         }
                     }
+                    vkQueue(url: $url) {
+                        date
+                    }
                 }
             `,
             variables: {
@@ -41,12 +45,12 @@ export default async function getStatus(
     if (statusResponse.ok) {
         let status = {};
         const statusJson = await statusResponse.json();
-        const {data: {histories: {edges}}} = statusJson;
+        const {data: {histories: {edges}, vkQueue: {date}}} = statusJson;
         
         if (edges.length) {
             ([{node: status}] = edges);
 
-            return status as IStatusResponse;
+            return {...status, date} as IStatusResponse;
         }
         
         return status as IStatusResponse;

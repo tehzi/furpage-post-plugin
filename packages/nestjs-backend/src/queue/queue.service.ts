@@ -30,6 +30,7 @@ export class QueueService extends TypeOrmQueryService<QueueEntity> {
             const [author] = await this.repo.manager.find(AuthorEntity, { where: { id: authorId } });
 
             this.vk.setAccessToken(author.accessToken);
+            const vkPostId = await this.vk.postVk(images);
 
             for (const image of images) {
                 const { url, tags } = image;
@@ -37,11 +38,10 @@ export class QueueService extends TypeOrmQueryService<QueueEntity> {
                     authorId,
                     url,
                     tags,
+                    vkPostId,
                 });
                 await this.repo.manager.insert(HistoryEntity, historyItem);
             }
-
-            await this.vk.postVk(images);
 
             await this.repo.manager.delete(QueueEntity, updatedEntity.id);
         }

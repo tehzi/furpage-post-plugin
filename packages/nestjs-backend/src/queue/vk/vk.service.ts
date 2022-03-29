@@ -1,11 +1,13 @@
 import { Injectable } from "@nestjs/common";
+import { HistoryEntity } from "src/history/history.entity";
 import { ImagesEntity } from "src/images/images.entity";
 import { API, Upload, VK } from "vk-io";
-import { UsersUserSettingsXtr } from "vk-io/lib/api/schemas/objects";
+import { UsersUserSettingsXtr, WallWallpostFull } from "vk-io/lib/api/schemas/objects";
 
 const START_REPOST = 6;
 const END_REPOST = 23;
 const REPOST_GAP = 3_600_000;
+const TIME_ZONE = 3;
 
 @Injectable()
 export class VkService {
@@ -19,14 +21,14 @@ export class VkService {
 
     private getNextRepostSlot(now = new Date()): number {
         const nextSlotWithMinutes = new Date(now.getTime() + REPOST_GAP);
-        const nextSlotHour = nextSlotWithMinutes.getHours() + 3;
+        const nextSlotHour = nextSlotWithMinutes.getHours() + TIME_ZONE;
 
         if (nextSlotHour > END_REPOST || nextSlotHour < START_REPOST) {
             if (nextSlotHour > END_REPOST) {
                 nextSlotWithMinutes.setDate(nextSlotWithMinutes.getDate() + 1);
             }
 
-            nextSlotWithMinutes.setUTCHours(6 - 3);
+            nextSlotWithMinutes.setUTCHours(START_REPOST - TIME_ZONE);
         }
 
         nextSlotWithMinutes.setMinutes(0);
@@ -36,10 +38,13 @@ export class VkService {
         return nextSlotWithMinutes.getTime();
     }
 
-    async postVk(images: ImagesEntity[]): Promise<unknown> {
+    async postVk(images: ImagesEntity[]): Promise<string> {
+        if (!this.vk) {
+            throw new Error("No access token");
+        }
+
         const [{ title, url, fileUrl }] = images;
         const [, publicId] = process.env.PUBLIC_ID.match(/(\d+)$/);
-
         const attachment = await this.upload.wallPhoto({
             source: {
                 values: [
@@ -61,8 +66,7 @@ export class VkService {
             count: 1,
             offset: count !== 0 ? count - 1 : 0,
         });
-
-        await this.vk.api.wall.post({
+        const wallPost = await this.vk.api.wall.post({
             owner_id: -publicId,
             from_group: 1,
             message: title,
@@ -72,7 +76,7 @@ export class VkService {
             publish_date: Math.floor(this.getNextRepostSlot(new Date(date * 1000)) / 1000),
         });
 
-        return;
+        return `wall-${publicId}_${wallPost.post_id}`;
     }
 
     async getProfile(): Promise<UsersUserSettingsXtr> {
@@ -83,6 +87,22 @@ export class VkService {
         const profile = await this.vk.api.account.getProfileInfo({});
 
         return profile;
+    }
+
+    async getPostByID(historyItem: HistoryEntity): Promise<WallWallpostFull | null> {
+        if (!this.vk) {
+            throw new Error("No access token");
+        }
+
+        const { vkPostId } = historyItem;
+
+        if (vkPostId) {
+            const [post = null] = await this.vk.api.wall.getById({ posts: vkPostId?.replace(/^wall/, "") });
+
+            return post;
+        }
+
+        return null;
     }
 
     setAccessToken(accessToken: string): void {

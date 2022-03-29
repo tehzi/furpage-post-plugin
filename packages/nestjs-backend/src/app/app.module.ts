@@ -9,6 +9,7 @@ import { ImagesModule } from "src/images/images.module";
 import { QueueModule } from "src/queue/queue.module";
 import { AuthorModule } from "src/author/author.module";
 import { HistoryModule } from "src/history/history.module";
+import { VkQueueModule } from "src/vk-queue/vk-queue.module";
 
 @Module({
     imports: [
@@ -31,6 +32,7 @@ import { HistoryModule } from "src/history/history.module";
         QueueModule,
         AuthorModule,
         HistoryModule,
+        VkQueueModule,
     ],
     controllers: [AppController],
     providers: [AppService],

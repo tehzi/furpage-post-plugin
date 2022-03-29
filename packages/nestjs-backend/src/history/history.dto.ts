@@ -20,6 +20,9 @@ export class HistoryDto {
     @FilterableField({ nullable: false })
     authorId!: string;
 
+    @FilterableField({ nullable: false })
+    vkPostId!: string;
+
     @Field(() => GraphQLISODateTime)
     created!: Date;
 

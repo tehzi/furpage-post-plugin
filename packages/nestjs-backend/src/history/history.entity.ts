@@ -18,6 +18,9 @@ export class HistoryEntity {
     @Column({ nullable: false })
     authorId!: string;
 
+    @Column({ nullable: true })
+    vkPostId!: string;
+
     @ManyToOne(() => AuthorEntity, ({ queue }) => queue)
     author!: AuthorEntity;
 

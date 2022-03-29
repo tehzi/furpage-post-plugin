@@ -47,13 +47,20 @@ function* updateImageStatus({ payload: url }: ActionWithPayload<string>): SagaIt
 
         if (/* hasPermission &&  */isImageResource) {
             try {
+                let inQueue = false;
                 yield put(setLoading(true));
-                const {url: imageUrl = null} = yield call(getStatus, url);
+                const {url: imageUrl = null, date} = yield call(getStatus, url);
 
-                if (imageUrl !== null) {
+                if (date) {
+                    inQueue = new Date(date * 1000).getTime() > new Date().getTime();
+                }
+
+                if (!inQueue && imageUrl !== null) {
                     yield put(setAdded(url));
-                } else {
-                    // yield put(setInQueue(url));
+                } 
+                
+                if (inQueue) {
+                    yield put(setInQueue(url));
                 }
                 // debugger
                 // TODO WIP
