@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/tehzi/furpage-post-plugin/compare/plugin-front-legacy@1.1.9...plugin-front-legacy@1.2.0) (2022-04-17)
+
+
+### Features
+
+* Create backend for plugin [#29](https://github.com/tehzi/furpage-post-plugin/issues/29) ([#30](https://github.com/tehzi/furpage-post-plugin/issues/30)) ([8f18c6d](https://github.com/tehzi/furpage-post-plugin/commit/8f18c6dd834be053204b899bbe717b60fed68735))
+
+
+
+
+
 ## [1.1.9](https://github.com/tehzi/furpage-post-plugin/compare/plugin-front-legacy@1.1.8...plugin-front-legacy@1.1.9) (2022-02-19)
 
 **Note:** Version bump only for package plugin-front-legacy
