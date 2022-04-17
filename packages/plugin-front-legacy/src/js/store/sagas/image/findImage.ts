@@ -3,7 +3,14 @@ import { SagaIterator } from "redux-saga";
 import { setLoading } from "~actions/login";
 import { CHROME_TAB_COMPLETE, chromeError, TAB_CHANGED, ChromeTabArgs } from "~actions/chrome";
 import { findImageUrl } from "~helpers/mode";
-import { ADD_IMAGE_LINK_TO_STORE, addImageLinkToStore, UPDATE_IMAGE, updateImage, setInQueue, setAdded } from "~actions/images";
+import {
+    ADD_IMAGE_LINK_TO_STORE,
+    addImageLinkToStore,
+    UPDATE_IMAGE,
+    updateImage,
+    setInQueue,
+    setAdded,
+} from "~actions/images";
 // import getStatus from "~api/images/getStatus";
 // import authorizeFlow from "../flows/authorizeFlow";
 import { ActionWithPayload } from "~types/actions";
@@ -45,20 +52,20 @@ function* updateImageStatus({ payload: url }: ActionWithPayload<string>): SagaIt
         // const hasPermission = yield select(({ login: { hasPermission } }) => hasPermission);
         const isImageResource = !!findImageUrl(url);
 
-        if (/* hasPermission &&  */isImageResource) {
+        if (/* hasPermission &&  */ isImageResource) {
             try {
                 let inQueue = false;
                 yield put(setLoading(true));
-                const {url: imageUrl = null, date} = yield call(getStatus, url);
+                const { url: imageUrl = null, date } = yield call(getStatus, url);
 
                 if (date) {
-                    inQueue = new Date(date * 1000).getTime() > new Date().getTime();
+                    inQueue = new Date(date * 1000).getTime() > Date.now();
                 }
 
                 if (!inQueue && imageUrl !== null) {
                     yield put(setAdded(url));
-                } 
-                
+                }
+
                 if (inQueue) {
                     yield put(setInQueue(url));
                 }

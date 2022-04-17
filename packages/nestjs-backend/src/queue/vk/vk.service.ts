@@ -69,7 +69,7 @@ export class VkService {
         const wallPost = await this.vk.api.wall.post({
             owner_id: -publicId,
             from_group: 1,
-            message: title,
+            message: title.replace(" -- Fur Affinity [dot] net", ""),
             copyright: url,
             topic_id: 1,
             attachments: [`${attachment.type}${attachment.ownerId}_${attachment.id}`],

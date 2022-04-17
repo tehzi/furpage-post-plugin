@@ -1,7 +1,7 @@
-import { QueueEntity } from './queue.entity';
+import { QueueEntity } from "./queue.entity";
 
-describe('QueueEntity', () => {
-  it('should be defined', () => {
-    expect(new QueueEntity()).toBeDefined();
-  });
+describe("QueueEntity", () => {
+    it("should be defined", () => {
+        expect(new QueueEntity()).toBeDefined();
+    });
 });

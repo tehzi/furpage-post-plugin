@@ -22,7 +22,11 @@ export default async function updateAuthorToken(id: string, accessToken: string)
 
     if (authorResponse.ok) {
         const authorJson = await authorResponse.json();
-        const {data: {updateOneAuthor: { id }}} = authorJson;
+        const {
+            data: {
+                updateOneAuthor: { id },
+            },
+        } = authorJson;
 
         return id;
     }

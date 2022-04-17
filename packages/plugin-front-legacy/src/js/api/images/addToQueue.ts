@@ -1,4 +1,10 @@
-export default async function addToQueue(queueId: string, url: string, title: string, tags: string, fileUrl: string): Promise<string | never> {
+export default async function addToQueue(
+    queueId: string,
+    url: string,
+    title: string,
+    tags: string,
+    fileUrl: string,
+): Promise<string | never> {
     const queueResponse = await fetch(process.env.API_URL, {
         method: "POST",
         headers: {
@@ -35,7 +41,11 @@ export default async function addToQueue(queueId: string, url: string, title: st
 
     if (queueResponse.ok) {
         const queueJson = await queueResponse.json();
-        const {data: {createOneImages: {id}}} = queueJson;
+        const {
+            data: {
+                createOneImages: { id },
+            },
+        } = queueJson;
 
         return id;
     }

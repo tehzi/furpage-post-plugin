@@ -33,8 +33,8 @@ const getChannel: GetChannel = () => {
     return eventChannel((emit) => {
         chrome.storage.sync.get(
             ["accessToken", "userId" /* , "apiAccessToken", "apiRefreshToken" */],
-            ({ accessToken, userId, authorId, /* , apiAccessToken, apiRefreshToken */ }) => {
-                emit({ accessToken, userId, authorId, /* , apiAccessToken, apiRefreshToken */ });
+            ({ accessToken, userId, authorId /* , apiAccessToken, apiRefreshToken */ }) => {
+                emit({ accessToken, userId, authorId /* , apiAccessToken, apiRefreshToken */ });
             },
         );
         return (): void => {};
@@ -45,9 +45,12 @@ export type RemoveChannel = () => EventChannel<boolean>;
 
 const removeChannel: RemoveChannel = () => {
     return eventChannel((emit) => {
-        chrome.storage.sync.remove(["accessToken", "userId", "authorId" /* , "apiAccessToken", "apiRefreshToken" */], () => {
-            emit(true);
-        });
+        chrome.storage.sync.remove(
+            ["accessToken", "userId", "authorId" /* , "apiAccessToken", "apiRefreshToken" */],
+            () => {
+                emit(true);
+            },
+        );
         return (): void => {};
     });
 };

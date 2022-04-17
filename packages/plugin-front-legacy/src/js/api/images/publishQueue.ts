@@ -21,7 +21,11 @@ export default async function publishQueue(queueId: string): Promise<string | ne
 
     if (queueResponse.ok) {
         const queueJson = await queueResponse.json();
-        const {data: {updateOneQueue: {id}}} = queueJson;
+        const {
+            data: {
+                updateOneQueue: { id },
+            },
+        } = queueJson;
 
         return id;
     }

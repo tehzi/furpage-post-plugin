@@ -1,7 +1,7 @@
-import { AuthorDto } from './author.dto';
+import { AuthorDto } from "./author.dto";
 
-describe('AuthorDto', () => {
-  it('should be defined', () => {
-    expect(new AuthorDto()).toBeDefined();
-  });
+describe("AuthorDto", () => {
+    it("should be defined", () => {
+        expect(new AuthorDto()).toBeDefined();
+    });
 });

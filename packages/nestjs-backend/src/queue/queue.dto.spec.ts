@@ -1,7 +1,7 @@
-import { QueueDto } from './queue.dto';
+import { QueueDto } from "./queue.dto";
 
-describe('QueueDto', () => {
-  it('should be defined', () => {
-    expect(new QueueDto()).toBeDefined();
-  });
+describe("QueueDto", () => {
+    it("should be defined", () => {
+        expect(new QueueDto()).toBeDefined();
+    });
 });

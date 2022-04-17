@@ -30,10 +30,18 @@ export default async function getAuthor(vkID: string): Promise<IAuthorResponse |
     if (authorResponse.ok) {
         let id = null;
         const authorJson = await authorResponse.json();
-        const {data: {authors: {edges = []}}} = authorJson;
+        const {
+            data: {
+                authors: { edges = [] },
+            },
+        } = authorJson;
 
-        if (edges.length) {
-            ([{node: { id }}] = edges || []);
+        if (edges.length > 0) {
+            [
+                {
+                    node: { id },
+                },
+            ] = edges || [];
         }
 
         return { id };

@@ -1,7 +1,7 @@
-import { ImagesDto } from './images.dto';
+import { ImagesDto } from "./images.dto";
 
-describe('ImagesDto', () => {
-  it('should be defined', () => {
-    expect(new ImagesDto()).toBeDefined();
-  });
+describe("ImagesDto", () => {
+    it("should be defined", () => {
+        expect(new ImagesDto()).toBeDefined();
+    });
 });

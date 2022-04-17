@@ -21,7 +21,11 @@ export default async function createQueue(authorId: string): Promise<string | ne
 
     if (queueResponse.ok) {
         const queueJson = await queueResponse.json();
-        const {data: {createOneQueue: {id}}} = queueJson;
+        const {
+            data: {
+                createOneQueue: { id },
+            },
+        } = queueJson;
 
         return id;
     }

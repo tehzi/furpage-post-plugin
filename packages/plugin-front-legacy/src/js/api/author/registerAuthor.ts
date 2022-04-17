@@ -27,7 +27,11 @@ export default async function registerAuthor(accessToken: string): Promise<strin
 
     if (authorResponse.ok) {
         const authorJson = await authorResponse.json();
-        const {data: {createOneAuthor: {id}}} = authorJson;
+        const {
+            data: {
+                createOneAuthor: { id },
+            },
+        } = authorJson;
 
         return id;
     }

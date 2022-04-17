@@ -45,14 +45,19 @@ export default async function getStatus(
     if (statusResponse.ok) {
         let status = {};
         const statusJson = await statusResponse.json();
-        const {data: {histories: {edges}, vkQueue: {date}}} = statusJson;
-        
-        if (edges.length) {
-            ([{node: status}] = edges);
+        const {
+            data: {
+                histories: { edges },
+                vkQueue: { date },
+            },
+        } = statusJson;
 
-            return {...status, date} as IStatusResponse;
+        if (edges.length > 0) {
+            [{ node: status }] = edges;
+
+            return { ...status, date } as IStatusResponse;
         }
-        
+
         return status as IStatusResponse;
     }
 

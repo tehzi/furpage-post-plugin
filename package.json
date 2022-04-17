@@ -12,7 +12,7 @@
     "build:legacy": "lerna run build --scope=plugin-front-legacy --stream",
     "build:legacy:dev": "lerna run build:dev --scope=plugin-front-legacy --stream",
     "eslint": "eslint --quiet --config ./.eslintrc.js --ext .ts,.tsx ./",
-    "eslint:fix": "eslint --quiet --fix --config ./.eslintrc.js --ext .ts,.tsx ./",
+    "eslint:fix": "eslint --quiet --fix --config ./.eslintrc.js --ext .ts,.tsx ./packages",
     "release": "lerna version --conventional-commits --loglevel=error --include-merged-tags -m 'Automatic release' --yes"
   },
   "devDependencies": {

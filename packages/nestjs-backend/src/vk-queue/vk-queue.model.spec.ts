@@ -1,7 +1,7 @@
-import { VkQueueModel } from './vk-queue.model';
+import { VkQueueModel } from "./vk-queue.model";
 
-describe('VkQueueModel', () => {
-  it('should be defined', () => {
-    expect(new VkQueueModel()).toBeDefined();
-  });
+describe("VkQueueModel", () => {
+    it("should be defined", () => {
+        expect(new VkQueueModel()).toBeDefined();
+    });
 });

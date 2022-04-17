@@ -13,14 +13,15 @@ import publishQueue from "~api/images/publishQueue";
 
 // TODO WIP
 function* addImage({
-    payload: {
-        image: fileUrl,
-        tags: tagsArray = [],
-        title,
-        url,
-    },
+    payload: { image: fileUrl, tags: tagsArray = [], title, url },
 }: ActionWithPayload<IAddImage>): SagaIterator {
-    const {authorId} = yield select(({ login: { auth: { userId, authorId } } }) => ({userId, authorId}));
+    const { authorId } = yield select(
+        ({
+            login: {
+                auth: { userId, authorId },
+            },
+        }) => ({ userId, authorId }),
+    );
     // let tags = tagsArray.map(tag => `#${tag} `).slice(0, MAX_TAGS).join(" ").trim();
     // if (tags) {
     //     tags = `#фурри ${tags}`;
@@ -42,8 +43,8 @@ function* addImage({
                 yield put(setInQueue(url));
             }
         }
-    } catch (err) {
-        yield put(chromeError(err));
+    } catch (error) {
+        yield put(chromeError(error));
     }
 }
 

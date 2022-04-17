@@ -53,14 +53,11 @@ function* startAuth(): SagaIterator {
                 //     refresh_token: apiRefreshToken,
                 // } = yield call(getApiPermission, accessToken);
 
+                let { id: authorId } = yield call(getAuthor, userId);
 
-                let {id: authorId} = yield call(getAuthor, userId);
-
-                if (!authorId) {
-                    authorId = yield call(registerAuthor, accessToken);
-                } else {
-                    authorId = yield call(updateAuthorToken, authorId, accessToken)
-                }
+                authorId = yield !authorId
+                    ? call(registerAuthor, accessToken)
+                    : call(updateAuthorToken, authorId, accessToken);
 
                 yield put(
                     auth({
@@ -78,7 +75,7 @@ function* startAuth(): SagaIterator {
         }
 
         yield put(vkApiAuth());
-        
+
         if (id !== false) {
             chrome.tabs.remove(id);
         }
