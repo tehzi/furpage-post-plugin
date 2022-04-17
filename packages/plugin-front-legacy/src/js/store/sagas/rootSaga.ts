@@ -31,7 +31,7 @@ export default function* rootSaga(): SagaIterator {
                 isCore && fork(findImage),
                 isCore && fork(sendImage),
                 fork(store),
-            ].filter((item) => item),
+            ].filter(Boolean),
         );
 
         if (isCore) {

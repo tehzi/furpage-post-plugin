@@ -1,12 +1,20 @@
-import { put, select, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { setLoading } from "~actions/login";
 import { CHROME_TAB_COMPLETE, chromeError, TAB_CHANGED, ChromeTabArgs } from "~actions/chrome";
 import { findImageUrl } from "~helpers/mode";
-import { ADD_IMAGE_LINK_TO_STORE, addImageLinkToStore, UPDATE_IMAGE, updateImage } from "~actions/images";
+import {
+    ADD_IMAGE_LINK_TO_STORE,
+    addImageLinkToStore,
+    UPDATE_IMAGE,
+    updateImage,
+    setInQueue,
+    setAdded,
+} from "~actions/images";
 // import getStatus from "~api/images/getStatus";
 // import authorizeFlow from "../flows/authorizeFlow";
 import { ActionWithPayload } from "~types/actions";
+import getStatus from "~api/images/getStatus";
 
 function* tabComplete({
     payload: {
@@ -41,12 +49,27 @@ function* tabComplete({
 
 function* updateImageStatus({ payload: url }: ActionWithPayload<string>): SagaIterator {
     try {
-        const hasPermission = yield select(({ login: { hasPermission: hasPerm } }) => hasPerm);
+        // const hasPermission = yield select(({ login: { hasPermission } }) => hasPermission);
         const isImageResource = !!findImageUrl(url);
-        if (hasPermission && isImageResource) {
+
+        if (/* hasPermission &&  */ isImageResource) {
             try {
+                let inQueue = false;
                 yield put(setLoading(true));
-                // console.log(yield call(authorizeFlow, getStatus, url));
+                const { url: imageUrl = null, date } = yield call(getStatus, url);
+
+                if (date) {
+                    inQueue = new Date(date * 1000).getTime() > Date.now();
+                }
+
+                if (!inQueue && imageUrl !== null) {
+                    yield put(setAdded(url));
+                }
+
+                if (inQueue) {
+                    yield put(setInQueue(url));
+                }
+                // debugger
                 // TODO WIP
                 // const { base = "0", queue = "0" } = yield call(getStatus, url);
                 // yield put(setLoading(false));
@@ -59,6 +82,7 @@ function* updateImageStatus({ payload: url }: ActionWithPayload<string>): SagaIt
                 // if ([base, queue].every(item => item === "0")) {
                 //     yield put(resetImage(url));
                 // }
+                yield put(setLoading(false));
             } catch (error) {
                 yield put(chromeError(error));
             }

@@ -5,6 +5,10 @@ import { accessAllow, accessDeny, vkApiAuth, AUTH, auth, deleteAuth, VK_AUTH } f
 import { CHROME_TAB_COMPLETE } from "~actions/chrome";
 import { findBlank } from "~helpers/mode";
 import getGroupPermissionById from "~api/permission/getGroupPermissionById";
+import getAuthor from "~api/author/getAuthor";
+import registerAuthor from "~api/author/registerAuthor";
+import updateAuthorToken from "~api/author/updateAuthorToken";
+// import { updateImage } from "~store/actions/images";
 // import getApiPermission from "~api/permission/getApiPermission";
 
 export interface VKUrl {
@@ -16,7 +20,7 @@ function* startAuth(): SagaIterator {
     const uri = new Uri("https://oauth.vk.com/authorize");
     uri.addQuery({
         client_id: process.env.CLIENT_ID,
-        scope: "pages,wall,groups,offline,notify,friends",
+        scope: "pages,wall,groups,offline,notify,friends,photos",
         redirect_uri: "https://oauth.vk.com/blank.html",
         response_type: "token",
     });
@@ -48,10 +52,18 @@ function* startAuth(): SagaIterator {
                 //     access_token: apiAccessToken,
                 //     refresh_token: apiRefreshToken,
                 // } = yield call(getApiPermission, accessToken);
+
+                let { id: authorId } = yield call(getAuthor, userId);
+
+                authorId = yield !authorId
+                    ? call(registerAuthor, accessToken)
+                    : call(updateAuthorToken, authorId, accessToken);
+
                 yield put(
                     auth({
                         accessToken,
                         userId,
+                        authorId,
                         // apiAccessToken,
                         // apiRefreshToken,
                     }),
@@ -61,7 +73,9 @@ function* startAuth(): SagaIterator {
                 yield put(deleteAuth());
             }
         }
+
         yield put(vkApiAuth());
+
         if (id !== false) {
             chrome.tabs.remove(id);
         }
