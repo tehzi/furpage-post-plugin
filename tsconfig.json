@@ -26,7 +26,8 @@
     },
     "include": [
         "**/*",
-        ".babelrc.js"    
+        ".babelrc.js",
+        ".eslintrc.js"  
     ],
     "exclude": [
         "node_modules"

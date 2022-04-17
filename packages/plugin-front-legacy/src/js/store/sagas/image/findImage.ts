@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { setLoading } from "~actions/login";
 import { CHROME_TAB_COMPLETE, chromeError, TAB_CHANGED, ChromeTabArgs } from "~actions/chrome";

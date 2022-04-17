@@ -1,32 +1,26 @@
+// eslint-disable-next-line unicorn/prefer-module
 module.exports = {
     parser: "@typescript-eslint/parser",
     parserOptions: {
-        ecmaVersion: 10,
         sourceType: "module",
         jsx: true,
         useJSXTextNode: true,
         ecmaFeatures: {
             jsx: true,
         },
+        ecmaVersion: "latest",
         project: "./tsconfig.json",
+        // eslint-disable-next-line unicorn/prefer-module
         tsconfigRootDir: __dirname,
     },
-    plugins: [
-        "import",
-        "@typescript-eslint",
-        "redux-saga",
-        "eslint-comments",
-        "promise",
-        "unicorn",
-        "prettier",
-    ],
+    plugins: ["import", "@typescript-eslint", "redux-saga", "eslint-comments", "promise", "unicorn", "prettier"],
     settings: {
         "import/parser": {
             "@typescript-eslint/parser": [".ts", ".tsx"],
         },
         "import/resolver": {
-            "node": {
-                "extensions": [".js",".jsx",".ts",".tsx"],
+            node: {
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
             },
             // typescript: {},
             // webpack: {
@@ -46,7 +40,7 @@ module.exports = {
         node: true,
         browser: true,
         es6: true,
-        // TODO посмотреть js environment
+        es2022: true,
     },
     extends: [
         "airbnb-typescript",
@@ -77,7 +71,7 @@ module.exports = {
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/default-param-last": "off",
         "promise/always-return": "off",
-        "promise/catch-or-return": ["error", {allowFinally: true}],
+        "promise/catch-or-return": ["error", { allowFinally: true }],
         "unicorn/filename-case": [
             "warn",
             {
@@ -102,7 +96,7 @@ module.exports = {
         "react/require-default-props": "off",
         "no-empty": "off",
         "no-plusplus": "off",
-        "no-console": ["error", {allow: ["warn", "error", "debug"]}],
+        "no-console": ["error", { allow: ["warn", "error", "debug"] }],
         "no-param-reassign": "off",
         "no-return-assign": "off",
         "no-continue": "off",
@@ -132,12 +126,12 @@ module.exports = {
             "error",
             "ignorePackages",
             {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never",
+                js: "never",
+                jsx: "never",
+                ts: "never",
+                tsx: "never",
                 "": "never",
-            }
+            },
         ],
     },
     ignorePatterns: ["/node_modules/"],

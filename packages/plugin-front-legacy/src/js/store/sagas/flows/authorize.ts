@@ -8,7 +8,7 @@ import getGroupPermissionById from "~api/permission/getGroupPermissionById";
 import getAuthor from "~api/author/getAuthor";
 import registerAuthor from "~api/author/registerAuthor";
 import updateAuthorToken from "~api/author/updateAuthorToken";
-import { updateImage } from "~store/actions/images";
+// import { updateImage } from "~store/actions/images";
 // import getApiPermission from "~api/permission/getApiPermission";
 
 export interface VKUrl {

@@ -15,7 +15,7 @@ export type SetChannel = (
 const setChannel: SetChannel = (
     accessToken,
     userId,
-    authorId,
+    // authorId,
     // apiAccessToken,
     // apiRefreshToken,
 ) => {

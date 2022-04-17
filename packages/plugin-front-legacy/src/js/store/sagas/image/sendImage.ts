@@ -8,28 +8,29 @@ import { setLoading } from "~actions/login";
 import createQueue from "~api/images/createQueue";
 import addToQueue from "~api/images/addToQueue";
 import publishQueue from "~api/images/publishQueue";
+import IAppStore from "~types/IAppStore";
 
 // export const MAX_TAGS = 5;
+
+const authorSelector = ({
+    login: {
+        auth: { userId, authorId },
+    },
+}: IAppStore) => ({ userId, authorId });
 
 // TODO WIP
 function* addImage({
     payload: { image: fileUrl, tags: tagsArray = [], title, url },
 }: ActionWithPayload<IAddImage>): SagaIterator {
-    const { authorId } = yield select(
-        ({
-            login: {
-                auth: { userId, authorId },
-            },
-        }) => ({ userId, authorId }),
-    );
     // let tags = tagsArray.map(tag => `#${tag} `).slice(0, MAX_TAGS).join(" ").trim();
     // if (tags) {
     //     tags = `#фурри ${tags}`;
     // } else {
     //     tags = "#фурри #furry";
     // }
-
     try {
+        const { authorId } = yield select(authorSelector);
+
         yield put(setLoading(true));
 
         const queueId = yield call(createQueue, authorId);

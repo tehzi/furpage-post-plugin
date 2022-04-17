@@ -24,11 +24,11 @@ export default async function updateAuthorToken(id: string, accessToken: string)
         const authorJson = await authorResponse.json();
         const {
             data: {
-                updateOneAuthor: { id },
+                updateOneAuthor: { id: entityId },
             },
         } = authorJson;
 
-        return id;
+        return entityId;
     }
 
     throw new Error("Wrong request");
