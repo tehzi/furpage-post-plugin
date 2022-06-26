@@ -1,0 +1,61 @@
+service: furpage
+frameworkVersion: "3"
+configValidationMode: off
+
+# provider:
+#   name: yandex-cloud
+#   # runtime: nodejs16
+#   runtime: nodejs16.x
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  versionFunctions: false
+  # stage: dev
+  # environment: # Service wide environment variables
+  #   NODE_ENV: production
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  # - "@yandex-cloud/serverless-plugin"
+
+custom:
+  webpack:
+    webpackConfig: webpack.config.js
+    packager: yarn
+    keepOutputDirectory: true
+    includeModules:
+      forceInclude:
+        - apollo-server-core
+        - apollo-server-express
+  serverless-offline:
+    # useDocker: true
+
+package:
+  excludeDevDependencies: true
+  # patterns:
+  #   - '!**'
+
+
+functions:
+  graphql:
+    handler: graphql.handler
+    memorySize: 128
+    timeout: 30
+    account: function-sa
+    events:
+      - http:
+          cors: true
+          path: '/{proxy+}'
+          method: any
+
+resources:
+  trigger-sa:
+    type: yc::ServiceAccount
+    roles:
+      - serverless.functions.invoker
+  function-sa:
+    type: yc::ServiceAccount
+    roles:
+      - editor

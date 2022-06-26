@@ -78,6 +78,7 @@ module.exports = {
                 cases: {
                     pascalCase: true,
                     camelCase: true,
+                    kebabCase: true,
                 },
             },
         ],
@@ -87,6 +88,7 @@ module.exports = {
         "unicorn/no-null": "off",
         "unicorn/prevent-abbreviations": "warn",
         "unicorn/prefer-spread": "off",
+        "unicorn/text-encoding-identifier-case": "off",
         "react/prop-types": "off",
         "react/static-property-placement": "off",
         "react/jsx-props-no-spreading": "off",
@@ -122,6 +124,7 @@ module.exports = {
         "unicorn/consistent-destructuring": "off",
         "no-debugger": "error",
         "no-useless-constructor": "off",
+        "@typescript-eslint/no-empty-interface": "warn",
         "import/extensions": [
             "error",
             "ignorePackages",

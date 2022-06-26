@@ -27,3 +27,20 @@ services:
         working_dir: /app
         depends_on: 
             - postgres
+
+    ydb:
+        image: cr.yandex/yc/yandex-docker-local-ydb:latest
+        restart: unless-stopped
+        hostname: localhost
+        ports:
+          - 2135:2135
+          - 8765:8765
+          - 2136:2136
+        volumes:
+          - ./ydb_data:/ydb_data
+          - ./ydb_certs:/ydb_certs
+        environment:
+          - YDB_DEFAULT_LOG_LEVEL=NOTICE
+          - GRPC_TLS_PORT=2135
+          - GRPC_PORT=2136
+          - MON_PORT=8765
